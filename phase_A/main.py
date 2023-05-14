@@ -151,7 +151,7 @@ for grade in grade_subject:
     # excel格式整理   
     pbar = tqdm(os.listdir(os.path.join(current_dir, grade)), desc='Excel格式重整 Processing')
     for file in pbar:
-        if file =='.DS_Store' or file.startswith('~$'):
+        if file =='.DS_Store' or '.gitkeep' or file.startswith('~$'):
             continue
         file_path = os.path.join(current_dir, grade, file)
         reform_excel(file_path)
