@@ -1,5 +1,6 @@
 import os
 import time
+# import shutil
 import pandas as pd
 import openpyxl
 from openpyxl.styles import Font, Alignment
@@ -151,11 +152,21 @@ for grade in grade_subject:
     # excel格式整理   
     pbar = tqdm(os.listdir(os.path.join(current_dir, grade)), desc='Excel格式重整 Processing')
     for file in pbar:
-        if file =='.DS_Store' or '.gitkeep' or file.startswith('~$'):
+        if file =='.DS_Store' or file == file.startswith('~$') or file == '.gitkeep':
             continue
         file_path = os.path.join(current_dir, grade, file)
         reform_excel(file_path)
         time.sleep(0.2)
+
+
+# # 進行壓縮檔案處理
+# #資料夾列表
+# folder_paths = [os.path.join(current_dir, grade) for grade in grade_subject]
+# print(folder_paths)
+# # 壓縮後的檔案路徑和名稱
+# archive_path = os.path.join(current_dir, 'project')
+# #壓縮資料夾
+# shutil.make_archive(archive_path, 'zip', *folder_paths)
 
 # 設定結束執行時間點    
 end_time = time.time()
@@ -163,3 +174,5 @@ end_time = time.time()
 total_time = end_time - start_time
 print('\n******* 作業結束 ******* ')
 print(f"共耗時：{total_time} 秒")
+# 結束運行時螢幕維持3秒後關閉powershell 
+time.sleep(3)
