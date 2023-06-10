@@ -14,7 +14,7 @@ def classify_math(row):
     else:
         return "數學C"
     
-# function 數B數C分類
+# function 基本電學分類
 def classify_basic_electric(row):
     if "電機" in row["班級"]:
         return "電機部必3"
@@ -49,7 +49,7 @@ def gernerate_course(title, subject, grade, current_dir, raw_path):
             students_num = len(df_math.index)
             new_title = title[0:2] + math + title[4:]
             filename = f'{new_title}-{students_num}.xlsx'
-            df_math.to_excel(os.path.join(current_dir, grade, filename))
+            df_math.to_excel(os.path.join(current_dir, f'!!{grade}', filename))
         return
     
     # 過濾出基本電學(電機,生機,汽機車), 並生成excel
@@ -61,13 +61,13 @@ def gernerate_course(title, subject, grade, current_dir, raw_path):
             students_num = len(df_electric.index)
             new_title = f'({electric})' + title[0:6] 
             filename = f'{new_title}-{students_num}.xlsx'
-            df_electric.to_excel(os.path.join(current_dir, grade, filename))
+            df_electric.to_excel(os.path.join(current_dir, f'!!{grade}', filename))
         return
     
     # 科目人數excel檔名生成  
     students_num = len(df.index)
     filename = f'{title}-{students_num}.xlsx'
-    df.to_excel(os.path.join(current_dir, grade, filename))
+    df.to_excel(os.path.join(current_dir, f'!!{grade}', filename))
 
 # function excel格式整理 
 def reform_excel(f_path):
@@ -150,11 +150,11 @@ for grade in grade_subject:
         time.sleep(0.2)
             
     # excel格式整理   
-    pbar = tqdm(os.listdir(os.path.join(current_dir, grade)), desc='Excel格式重整 Processing')
+    pbar = tqdm(os.listdir(os.path.join(current_dir, f'!!{grade}')), desc='Excel格式重整 Processing')
     for file in pbar:
         if file =='.DS_Store' or file == file.startswith('~$') or file == '.gitkeep':
             continue
-        file_path = os.path.join(current_dir, grade, file)
+        file_path = os.path.join(current_dir, f'!!{grade}', file)
         reform_excel(file_path)
         time.sleep(0.2)
 
